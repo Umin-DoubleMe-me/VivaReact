@@ -735,7 +735,8 @@ PlayerSettings:
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
   scriptingDefineSymbols:
-    Android: Oculus_Define
+    Android: Oculus_Define;UNITY_CCU;CURVEDUI_OVR_HANDS;CURVEDUI_TMP;CURVEDUI_OCULUSVR;CURVEDUI_UNITY_XR
+    Standalone: UNITY_CCU;CURVEDUI_OVR_HANDS;CURVEDUI_TMP;CURVEDUI_UNITY_XR
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}
