@@ -12,12 +12,26 @@ public class CurvedTestRay : OculusPlatformRay
 		base.Awake();
 	}
 
+	/// <summary>
+	/// Meta Hover Tracking
+	/// </summary>
+	/// <returns></returns>
 	protected override RayInteractable ComputeCandidate()
 	{
 		RayInteractable result = base.ComputeCandidate();
 		result = CheckCurved();
 
 		return result;
+	}
+
+	/// <summary>
+	/// Meta Select Tracking
+	/// </summary>
+	protected override void DoSelectUpdate()
+	{
+		Debug.Log($"Umin {_selectedInteractable == null}");
+
+		base.DoSelectUpdate();
 	}
 
 	private RayInteractable CheckCurved()
@@ -49,4 +63,10 @@ public class CurvedTestRay : OculusPlatformRay
 
 		return result;
 	}
+
+	protected override Pose ComputePointerPose()
+	{
+		return base.ComputePointerPose();
+	}
+
 }
