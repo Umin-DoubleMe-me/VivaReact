@@ -10,16 +10,19 @@ namespace CurvedUI
 	
 		public void ChangeColorToBlue()
 		{
+			Debug.Log("Umin Down");
 			this.GetComponent<Renderer>().material.color = Color.blue;
 		}
 	
 		public void ChangeColorToCyan()
 		{
+			Debug.Log("Umin Hover");
 			this.GetComponent<Renderer>().material.color = Color.cyan;
 		}
 	
 		public void ChangeColorToWhite()
 		{
+			Debug.Log("Umin Exit");
 			this.GetComponent<Renderer>().material.color = Color.white;
 		}
 	

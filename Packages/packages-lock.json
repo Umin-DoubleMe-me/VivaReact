@@ -1,9 +1,9 @@
 {
   "dependencies": {
     "com.doubleme.vivarium.mr.input": {
-      "version": "https://github.com/DoubleMe-StudioX/PlatformInputPackage.git?path=Assets/InputManager",
+      "version": "file:C:/Users/uminc/Unity(New)/PlatformInputPackage/Assets/InputManager",
       "depth": 0,
-      "source": "git",
+      "source": "local",
       "dependencies": {
         "com.meta.xr.sdk.interaction.ovr": "60.0.0",
         "com.meta.xr.sdk.platform": "60.0.0",
@@ -11,19 +11,68 @@
         "com.unity.xr.management": "4.4.0",
         "com.unity.xr.interaction.toolkit": "2.5.2",
         "com.unity.xr.hands": "1.3.0"
-      },
-      "hash": "f21700145138d9d5a994745e90c6d28bb879b35b"
+      }
     },
-    "com.meta.xr.sdk.core": {
+    "com.meta.xr.mrutilitykit": {
       "version": "60.0.0",
-      "depth": 2,
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.meta.xr.sdk.core": "60.0.0",
+        "com.meta.xr.sdk.interaction": "60.0.0",
+        "com.meta.xr.sdk.interaction.ovr": "60.0.0",
+        "com.unity.ai.navigation": "1.1.4",
+        "com.unity.nuget.newtonsoft-json": "3.0.2",
+        "com.unity.textmeshpro": "3.0.6"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.meta.xr.sdk.all": {
+      "version": "60.0.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.meta.xr.mrutilitykit": "60.0.0",
+        "com.meta.xr.sdk.audio": "60.0.0",
+        "com.meta.xr.sdk.core": "60.0.0",
+        "com.meta.xr.sdk.haptics": "60.0.0",
+        "com.meta.xr.sdk.interaction": "60.0.0",
+        "com.meta.xr.sdk.interaction.ovr": "60.0.0",
+        "com.meta.xr.sdk.platform": "60.0.0",
+        "com.meta.xr.sdk.voice": "60.0.0",
+        "com.meta.xr.sdk.voice.composer": "60.0.0",
+        "com.meta.xr.sdk.voice.dictation": "60.0.0",
+        "com.meta.xr.sdk.voice.telemetry": "60.0.0",
+        "com.meta.xr.simulator": "60.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.meta.xr.sdk.audio": {
+      "version": "60.0.0",
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.meta.xr.sdk.core": {
+      "version": "60.0.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.meta.xr.sdk.haptics": {
+      "version": "60.0.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.meta.xr.sdk.core": "60.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
     "com.meta.xr.sdk.interaction": {
       "version": "60.0.0",
-      "depth": 2,
+      "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.unity.textmeshpro": "3.0.6",
@@ -68,6 +117,54 @@
       "dependencies": {
         "com.unity.textmeshpro": "3.0.6",
         "com.unity.ugui": "1.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.meta.xr.sdk.voice": {
+      "version": "60.0.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.meta.xr.sdk.voice.composer": {
+      "version": "60.0.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.meta.xr.sdk.voice": "60.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.meta.xr.sdk.voice.dictation": {
+      "version": "60.0.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.meta.xr.sdk.voice": "60.0.0"
+      },
+      "url": "https://packages.unity.com"
+    },
+    "com.meta.xr.sdk.voice.telemetry": {
+      "version": "60.0.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.meta.xr.simulator": {
+      "version": "60.0.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.ai.navigation": {
+      "version": "1.1.5",
+      "depth": 2,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.ai": "1.0.0"
       },
       "url": "https://packages.unity.com"
     },
@@ -152,6 +249,13 @@
     "com.unity.mathematics": {
       "version": "1.2.6",
       "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "3.2.1",
+      "depth": 2,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"

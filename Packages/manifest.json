@@ -1,6 +1,7 @@
 {
   "dependencies": {
-    "com.doubleme.vivarium.mr.input": "https://github.com/DoubleMe-StudioX/PlatformInputPackage.git?path=Assets/InputManager",
+    "com.doubleme.vivarium.mr.input": "file:C:/Users/uminc/Unity(New)/PlatformInputPackage/Assets/InputManager",
+    "com.meta.xr.sdk.all": "60.0.0",
     "com.unity.collab-proxy": "2.2.0",
     "com.unity.feature.development": "1.0.1",
     "com.unity.render-pipelines.universal": "14.0.9",
