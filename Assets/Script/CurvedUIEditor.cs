@@ -13,7 +13,6 @@ public enum ImageEffect
 	ScrollView,			//현재, New 이미지 모두 Swap
 	Fade,				//서서히 엎어지기
 	TwoImageAway,		//두 이미지가 교차하기
-	Animation			//애니메이션
 }
 
 [Serializable]
@@ -130,9 +129,6 @@ public class CurvedUIEditor : MonoBehaviour
 				break;
 			case ImageEffect.TwoImageAway:
 				ImageTwoImageAwayEffect(number, target);
-				break;
-			case ImageEffect.Animation:
-				ImageAnimationEffect(number, target);
 				break;
 		}
 	}

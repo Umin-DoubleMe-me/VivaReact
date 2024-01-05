@@ -14,9 +14,6 @@ public class CurvedUIData : MonoBehaviour
 	[SerializeField] public GameObject ButtonPrefab;
 	[SerializeField] public GameObject SideButtonPrefab;
 
-	[Header("ButtonMaterial")]
-	[SerializeField] public Material ButtonSelectedMat;
-
 	[Header("Back Image Position")]
 	[SerializeField] public Transform NewImageWaitUpPos1;
 	[SerializeField] public Transform NewImageWaitUpPos2;
