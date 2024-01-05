@@ -17,7 +17,7 @@ public class CurvedUIEventSetting : MonoBehaviour
 
 	private void ActiveSetting()
 	{
-		_graphicRaycaster.enabled = true;
+		if(_graphicRaycaster != null) _graphicRaycaster.enabled = true;
 		_pointableCanvasModule.enabled = true;
 	}
 
