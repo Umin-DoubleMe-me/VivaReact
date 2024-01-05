@@ -223,7 +223,9 @@ public class CurvedUIEditor : MonoBehaviour
 			{
 				_curvedUIData.CurImage_1.sprite = _buttonRightSetting[number].TargetImage_1;
 				_curvedUIData.NewImage_1.gameObject.transform.localPosition = _curvedUIData.NewImageWaitDownPos1.localPosition;
-			});
+				_curvedUIData.CurImage_1.gameObject.transform.localPosition = _curvedUIData.CurImagePos1.localPosition;
+			})
+			.Join(_curvedUIData.CurImage_1.transform.DOLocalMove(_curvedUIData.NewImageWaitUpPos1.localPosition, _swapSpeed).SetEase(_swapMoveType));
 		}
 		else
 		{
@@ -241,7 +243,9 @@ public class CurvedUIEditor : MonoBehaviour
 			{
 				_curvedUIData.CurImage_1.sprite = _buttonRightSetting[number].TargetImage_1;
 				_curvedUIData.NewImage_1.gameObject.transform.localPosition = _curvedUIData.NewImageWaitUpPos1.localPosition;
-			});
+				_curvedUIData.CurImage_1.gameObject.transform.localPosition = _curvedUIData.CurImagePos1.localPosition;
+			})
+			.Join(_curvedUIData.CurImage_1.transform.DOLocalMove(_curvedUIData.NewImageWaitDownPos1.localPosition, _swapSpeed).SetEase(_swapMoveType));
 		}
 	}
 	#endregion
