@@ -45,17 +45,22 @@ public class CurvedUIEditor : MonoBehaviour
 	private int _curSelectButtonNumber = 0;
 	private Sequence _mySequence = null;
 
+	private void Start()
+	{
+		Init();
+	}
+
 	private void Init()
 	{
-
+		_curvedUIData = GetComponent<CurvedUIData>();
+		_curvedUIData.Init();
+		ButtonEventRegis();
 	}
 
 	private void OnValidate()
 	{
 		if (!_autoUpdate) return;
 
-		_curvedUIData = GetComponent<CurvedUIData>();
-		_curvedUIData.Init();
 		Init();
 		CurvedSettingStart();
 	}
@@ -63,12 +68,12 @@ public class CurvedUIEditor : MonoBehaviour
 	private async Task CurvedSettingStart()
 	{
 		await CreateRightButton();
-		await BackGroundImageSetting();
+		BackGroundImageSetting();
 		await CreateSideButton();
 	}
 
 	#region BackImage
-	private async Task BackGroundImageSetting()
+	private void BackGroundImageSetting()
 	{
 		List<Image> images = _curvedUIData.BackImageGenTransform.GetComponentsInChildren<Image>().ToList();
 		List<RectTransform> rectTransforms = new List<RectTransform>();
@@ -76,9 +81,13 @@ public class CurvedUIEditor : MonoBehaviour
 		{
 			rectTransforms.Add(image.rectTransform);
 		}
+		ButtonEventRegis();
+	}
 
+	private void ButtonEventRegis()
+	{
 		List<Button> buttons = _curvedUIData.RightButtonGenTransform.GetComponentsInChildren<Button>().ToList();
-		for(int index = 0; index < buttons.Count; index++)
+		for (int index = 0; index < buttons.Count; index++)
 		{
 			int number = index;
 			buttons[index].onClick.RemoveAllListeners();

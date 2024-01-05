@@ -24,10 +24,15 @@ public class CurvedUIEventSetting : MonoBehaviour
 	private IEnumerator ActiveCor()
 	{
 		int num = 0;
-		while(num < 3)
+		while(num < 50)
 		{
 			yield return new WaitForSeconds(1.5f);
 			ActiveSetting();
 		}
+	}
+
+	public void TestButtonClick()
+	{
+		Debug.Log("Umin Click");
 	}
 }
