@@ -29,9 +29,8 @@ public class CurvedTestRay : OculusPlatformRay
 	/// </summary>
 	protected override void DoSelectUpdate()
 	{
-		Debug.Log($"Umin {_selectedInteractable == null}");
-
 		base.DoSelectUpdate();
+		ClickDownCheckCurved();
 	}
 
 	private RayInteractable CheckCurved()
@@ -62,6 +61,26 @@ public class CurvedTestRay : OculusPlatformRay
 		}
 
 		return result;
+	}
+
+	private void ClickDownCheckCurved()
+	{
+		float closestDist = float.MaxValue;
+		var hits = Physics.RaycastAll(Ray, MaxRayLength, uiMask);
+		RaycastHit closestUI = new RaycastHit();
+		foreach (RaycastHit hitUI in hits)
+		{
+			if (hitUI.distance < closestDist)
+			{
+				closestDist = hitUI.distance;
+				closestUI = hitUI;
+			}
+		}
+
+		if (closestUI.transform != null)
+		{
+			End = Origin + closestUI.distance * Forward;
+		}
 	}
 
 	protected override Pose ComputePointerPose()
