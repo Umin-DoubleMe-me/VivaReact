@@ -286,51 +286,36 @@ public class CurvedUIEditor : MonoBehaviour
 			_mySequence.Kill();
 		}
 
-		if (_curSelectButtonNumber < number)
-		{
-			_curSelectButtonNumber = number;
+		_curSelectButtonNumber = number;
 
-			_mySequence = DOTween.Sequence()
-			.SetAutoKill(false)
-			.OnStart(() =>
-			{
-				_curvedUIData.NewImage_1.sprite = _buttonRightSetting[number].TargetImage_1;
-				_curvedUIData.NewImage_1.gameObject.transform.localPosition = _curvedUIData.NewImageWaitDownPos1.localPosition;
-				_curvedUIData.NewImage_2.sprite = _buttonRightSetting[number].TargetImage_2;
-				_curvedUIData.NewImage_2.gameObject.transform.localPosition = _curvedUIData.NewImageWaitDownPos2.localPosition;
-			})
-			.Append(_curvedUIData.NewImage_1.transform.DOLocalMove(_curvedUIData.CurImagePos1.localPosition, _swapSpeed).SetEase(_swapMoveType))
-			.OnComplete(() =>
-			{
-				_curvedUIData.CurImage_1.sprite = _buttonRightSetting[number].TargetImage_1;
-				_curvedUIData.NewImage_1.gameObject.transform.localPosition = _curvedUIData.NewImageWaitDownPos1.localPosition;
-				_curvedUIData.CurImage_1.gameObject.transform.localPosition = _curvedUIData.CurImagePos1.localPosition;
-				_curvedUIData.CurImage_2.sprite = _buttonRightSetting[number].TargetImage_2;
-				_curvedUIData.NewImage_2.gameObject.transform.localPosition = _curvedUIData.NewImageWaitDownPos2.localPosition;
-				_curvedUIData.CurImage_2.gameObject.transform.localPosition = _curvedUIData.CurImagePos2.localPosition;
-			})
-			.Join(_curvedUIData.CurImage_1.transform.DOLocalMove(_curvedUIData.NewImageWaitUpPos1.localPosition, _swapSpeed).SetEase(_swapMoveType));
-		}
-		else
+		_mySequence = DOTween.Sequence()
+		.SetAutoKill(false)
+		.OnStart(() =>
 		{
-			_curSelectButtonNumber = number;
+			_curvedUIData.CurImage_1.sprite = _buttonRightSetting[number].TargetImage_1;
+			_curvedUIData.NewImage_2.sprite = _buttonRightSetting[number].TargetImage_2;
 
-			_mySequence = DOTween.Sequence()
-			.SetAutoKill(false)
-			.OnStart(() =>
-			{
-				_curvedUIData.NewImage_1.sprite = _buttonRightSetting[number].TargetImage_1;
-				_curvedUIData.NewImage_1.gameObject.transform.localPosition = _curvedUIData.NewImageWaitUpPos1.localPosition;
-			})
-			.Append(_curvedUIData.NewImage_1.transform.DOLocalMove(_curvedUIData.CurImagePos1.localPosition, _swapSpeed).SetEase(_swapMoveType))
-			.OnComplete(() =>
-			{
-				_curvedUIData.CurImage_1.sprite = _buttonRightSetting[number].TargetImage_1;
-				_curvedUIData.NewImage_1.gameObject.transform.localPosition = _curvedUIData.NewImageWaitUpPos1.localPosition;
-				_curvedUIData.CurImage_1.gameObject.transform.localPosition = _curvedUIData.CurImagePos1.localPosition;
-			})
-			.Join(_curvedUIData.CurImage_1.transform.DOLocalMove(_curvedUIData.NewImageWaitDownPos1.localPosition, _swapSpeed).SetEase(_swapMoveType));
-		}
+			Color tempColor = _curvedUIData.NewImage_2.color;
+			tempColor.a = 0;
+			_curvedUIData.NewImage_2.color = tempColor;
+			_curvedUIData.NewImage_2.gameObject.transform.localPosition = _curvedUIData.NewImageWaitLeftSidePos2.localPosition;
+		})
+		.Append(_curvedUIData.CurImage_2.DOFade(0, _swapSpeed).SetEase(_swapMoveType))
+		.Join(_curvedUIData.CurImage_2.transform.DOLocalMove(_curvedUIData.NewImageWaitLeftSidePos2.localPosition, _swapSpeed).SetEase(_swapMoveType))
+		.Append(_curvedUIData.NewImage_2.DOFade(1, _swapSpeed).SetEase(_swapMoveType))
+		.Join(_curvedUIData.NewImage_2.transform.DOLocalMove(_curvedUIData.CurImagePos2.localPosition, _swapSpeed).SetEase(_swapMoveType))
+		.OnComplete(() =>
+		{
+			_curvedUIData.NewImage_1.gameObject.transform.localPosition = _curvedUIData.NewImageWaitDownPos1.localPosition;
+			_curvedUIData.CurImage_1.gameObject.transform.localPosition = _curvedUIData.CurImagePos1.localPosition;
+
+			Color tempColor = _curvedUIData.CurImage_2.color;
+			tempColor.a = 1;
+			_curvedUIData.CurImage_2.color = tempColor;
+			_curvedUIData.CurImage_2.sprite = _buttonRightSetting[number].TargetImage_2;
+			_curvedUIData.NewImage_2.gameObject.transform.localPosition = _curvedUIData.NewImageWaitDownPos2.localPosition;
+			_curvedUIData.CurImage_2.gameObject.transform.localPosition = _curvedUIData.CurImagePos2.localPosition;
+		});
 	}
 
 	private void ImageTwoImageAwayEffect(int number)

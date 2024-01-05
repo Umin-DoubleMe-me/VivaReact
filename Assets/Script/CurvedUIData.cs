@@ -22,6 +22,8 @@ public class CurvedUIData : MonoBehaviour
 	[SerializeField] public Transform NewImageWaitUpPos2;
 	[SerializeField] public Transform NewImageWaitDownPos1;
 	[SerializeField] public Transform NewImageWaitDownPos2;
+	[SerializeField] public Transform NewImageWaitLeftSidePos1;
+	[SerializeField] public Transform NewImageWaitLeftSidePos2;
 	[SerializeField] public Transform CurImagePos1;
 	[SerializeField] public Transform CurImagePos2;
 
