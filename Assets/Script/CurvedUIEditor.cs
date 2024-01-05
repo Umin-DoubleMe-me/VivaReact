@@ -77,11 +77,6 @@ public class CurvedUIEditor : MonoBehaviour
 			rectTransforms.Add(image.rectTransform);
 		}
 
-		foreach (var rectTransform in rectTransforms)
-		{
-			rectTransform.sizeDelta = _curvedUIData.CanvasRectTrans.sizeDelta;
-		}
-
 		List<Button> buttons = _curvedUIData.RightButtonGenTransform.GetComponentsInChildren<Button>().ToList();
 		for(int index = 0; index < buttons.Count; index++)
 		{
@@ -95,8 +90,8 @@ public class CurvedUIEditor : MonoBehaviour
 
 	private void ButtonEffectSetting()
 	{
-		_curvedUIData.CurImage_2.gameObject.SetActive(false);
 		_curvedUIData.CurImage_1.sprite = _buttonRightSetting[0].TargetImage_1;
+		_curvedUIData.CurImage_2.sprite = _buttonRightSetting[0].TargetImage_2;
 	}
 
 	private void ButtonEffect(int number)
@@ -113,8 +108,10 @@ public class CurvedUIEditor : MonoBehaviour
 				ImageScrollViewEffect(number);
 				break;
 			case ImageEffect.Fade:
+				ImageFadeEffect(number);
 				break;
 			case ImageEffect.TwoImageAway:
+				ImageTwoImageAwayEffect(number);
 				break;
 		}
 	}
@@ -138,13 +135,18 @@ public class CurvedUIEditor : MonoBehaviour
 			{
 				_curvedUIData.NewImage_1.sprite = _buttonRightSetting[number].TargetImage_1;
 				_curvedUIData.NewImage_1.gameObject.transform.localPosition = _curvedUIData.NewImageWaitUpPos1.localPosition;
+				_curvedUIData.NewImage_2.sprite = _buttonRightSetting[number].TargetImage_2;
+				_curvedUIData.NewImage_2.gameObject.transform.localPosition = _curvedUIData.NewImageWaitUpPos2.localPosition;
 			})
 			.Append(_curvedUIData.NewImage_1.transform.DOLocalMove(_curvedUIData.CurImagePos1.localPosition, _swapSpeed).SetEase(_swapMoveType))
 			.OnComplete(() =>
 			{
 				_curvedUIData.CurImage_1.sprite = _buttonRightSetting[number].TargetImage_1;
 				_curvedUIData.NewImage_1.gameObject.transform.localPosition = _curvedUIData.NewImageWaitUpPos1.localPosition;
-			});
+				_curvedUIData.CurImage_2.sprite = _buttonRightSetting[number].TargetImage_2;
+				_curvedUIData.NewImage_2.gameObject.transform.localPosition = _curvedUIData.NewImageWaitUpPos2.localPosition;
+			})
+			.Join(_curvedUIData.NewImage_2.transform.DOLocalMove(_curvedUIData.CurImagePos2.localPosition, _swapSpeed).SetEase(_swapMoveType));
 	}
 
 	private void ImageSwapDynamicEffect(int number)
@@ -168,13 +170,146 @@ public class CurvedUIEditor : MonoBehaviour
 			{
 				_curvedUIData.NewImage_1.sprite = _buttonRightSetting[number].TargetImage_1;
 				_curvedUIData.NewImage_1.gameObject.transform.localPosition = _curvedUIData.NewImageWaitDownPos1.localPosition;
+				_curvedUIData.NewImage_2.sprite = _buttonRightSetting[number].TargetImage_2;
+				_curvedUIData.NewImage_2.gameObject.transform.localPosition = _curvedUIData.NewImageWaitDownPos2.localPosition;
 			})
 			.Append(_curvedUIData.NewImage_1.transform.DOLocalMove(_curvedUIData.CurImagePos1.localPosition, _swapSpeed).SetEase(_swapMoveType))
 			.OnComplete(() =>
 			{
 				_curvedUIData.CurImage_1.sprite = _buttonRightSetting[number].TargetImage_1;
 				_curvedUIData.NewImage_1.gameObject.transform.localPosition = _curvedUIData.NewImageWaitDownPos1.localPosition;
-			});
+				_curvedUIData.CurImage_2.sprite = _buttonRightSetting[number].TargetImage_2;
+				_curvedUIData.NewImage_2.gameObject.transform.localPosition = _curvedUIData.NewImageWaitDownPos2.localPosition;
+			})
+			.Join(_curvedUIData.NewImage_2.transform.DOLocalMove(_curvedUIData.CurImagePos2.localPosition, _swapSpeed).SetEase(_swapMoveType));
+		}
+		else
+		{
+			_curSelectButtonNumber = number;
+
+			_mySequence = DOTween.Sequence()
+			.SetAutoKill(false)
+			.OnStart(() =>
+			{
+				_curvedUIData.NewImage_1.sprite = _buttonRightSetting[number].TargetImage_1;
+				_curvedUIData.NewImage_1.gameObject.transform.localPosition = _curvedUIData.NewImageWaitUpPos1.localPosition;
+				_curvedUIData.NewImage_2.sprite = _buttonRightSetting[number].TargetImage_2;
+				_curvedUIData.NewImage_2.gameObject.transform.localPosition = _curvedUIData.NewImageWaitUpPos2.localPosition;
+			})
+			.Append(_curvedUIData.NewImage_1.transform.DOLocalMove(_curvedUIData.CurImagePos1.localPosition, _swapSpeed).SetEase(_swapMoveType))
+			.OnComplete(() =>
+			{
+				_curvedUIData.CurImage_1.sprite = _buttonRightSetting[number].TargetImage_1;
+				_curvedUIData.NewImage_1.gameObject.transform.localPosition = _curvedUIData.NewImageWaitUpPos1.localPosition;
+				_curvedUIData.CurImage_2.sprite = _buttonRightSetting[number].TargetImage_2;
+				_curvedUIData.NewImage_2.gameObject.transform.localPosition = _curvedUIData.NewImageWaitUpPos2.localPosition;
+			})
+			.Join(_curvedUIData.NewImage_2.transform.DOLocalMove(_curvedUIData.CurImagePos2.localPosition, _swapSpeed).SetEase(_swapMoveType));
+		}
+	}
+
+	private void ImageScrollViewEffect(int number)
+	{
+		if (_curSelectButtonNumber == number)
+			return;
+
+		if (_mySequence != null && _mySequence.IsPlaying())
+		{
+			_mySequence.onComplete?.Invoke();
+			_mySequence.Kill();
+		}
+
+		if (_curSelectButtonNumber < number)
+		{
+			_curSelectButtonNumber = number;
+
+			_mySequence = DOTween.Sequence()
+			.SetAutoKill(false)
+			.OnStart(() =>
+			{
+				_curvedUIData.NewImage_1.sprite = _buttonRightSetting[number].TargetImage_1;
+				_curvedUIData.NewImage_1.gameObject.transform.localPosition = _curvedUIData.NewImageWaitDownPos1.localPosition;
+				_curvedUIData.NewImage_2.sprite = _buttonRightSetting[number].TargetImage_2;
+				_curvedUIData.NewImage_2.gameObject.transform.localPosition = _curvedUIData.NewImageWaitDownPos2.localPosition;
+			})
+			.Append(_curvedUIData.NewImage_1.transform.DOLocalMove(_curvedUIData.CurImagePos1.localPosition, _swapSpeed).SetEase(_swapMoveType))
+			.OnComplete(() =>
+			{
+				_curvedUIData.CurImage_1.sprite = _buttonRightSetting[number].TargetImage_1;
+				_curvedUIData.NewImage_1.gameObject.transform.localPosition = _curvedUIData.NewImageWaitDownPos1.localPosition;
+				_curvedUIData.CurImage_1.gameObject.transform.localPosition = _curvedUIData.CurImagePos1.localPosition;
+				_curvedUIData.CurImage_2.sprite = _buttonRightSetting[number].TargetImage_2;
+				_curvedUIData.NewImage_2.gameObject.transform.localPosition = _curvedUIData.NewImageWaitDownPos2.localPosition;
+				_curvedUIData.CurImage_2.gameObject.transform.localPosition = _curvedUIData.CurImagePos2.localPosition;
+			})
+			.Join(_curvedUIData.CurImage_1.transform.DOLocalMove(_curvedUIData.NewImageWaitUpPos1.localPosition, _swapSpeed).SetEase(_swapMoveType))
+			.Join(_curvedUIData.NewImage_2.transform.DOLocalMove(_curvedUIData.CurImagePos2.localPosition, _swapSpeed).SetEase(_swapMoveType))
+			.Join(_curvedUIData.CurImage_2.transform.DOLocalMove(_curvedUIData.NewImageWaitUpPos2.localPosition, _swapSpeed).SetEase(_swapMoveType));
+		}
+		else
+		{
+			_curSelectButtonNumber = number;
+
+			_mySequence = DOTween.Sequence()
+			.SetAutoKill(false)
+			.OnStart(() =>
+			{
+				_curvedUIData.NewImage_1.sprite = _buttonRightSetting[number].TargetImage_1;
+				_curvedUIData.NewImage_1.gameObject.transform.localPosition = _curvedUIData.NewImageWaitUpPos1.localPosition;
+				_curvedUIData.NewImage_2.sprite = _buttonRightSetting[number].TargetImage_2;
+				_curvedUIData.NewImage_2.gameObject.transform.localPosition = _curvedUIData.NewImageWaitUpPos2.localPosition;
+			})
+			.Append(_curvedUIData.NewImage_1.transform.DOLocalMove(_curvedUIData.CurImagePos1.localPosition, _swapSpeed).SetEase(_swapMoveType))
+			.OnComplete(() =>
+			{
+				_curvedUIData.CurImage_1.sprite = _buttonRightSetting[number].TargetImage_1;
+				_curvedUIData.NewImage_1.gameObject.transform.localPosition = _curvedUIData.NewImageWaitUpPos1.localPosition;
+				_curvedUIData.CurImage_1.gameObject.transform.localPosition = _curvedUIData.CurImagePos1.localPosition;
+				_curvedUIData.CurImage_2.sprite = _buttonRightSetting[number].TargetImage_2;
+				_curvedUIData.NewImage_2.gameObject.transform.localPosition = _curvedUIData.NewImageWaitUpPos2.localPosition;
+				_curvedUIData.CurImage_2.gameObject.transform.localPosition = _curvedUIData.CurImagePos2.localPosition;
+			})
+			.Join(_curvedUIData.CurImage_1.transform.DOLocalMove(_curvedUIData.NewImageWaitDownPos1.localPosition, _swapSpeed).SetEase(_swapMoveType))
+			.Join(_curvedUIData.NewImage_2.transform.DOLocalMove(_curvedUIData.CurImagePos2.localPosition, _swapSpeed).SetEase(_swapMoveType))
+			.Join(_curvedUIData.CurImage_2.transform.DOLocalMove(_curvedUIData.NewImageWaitDownPos2.localPosition, _swapSpeed).SetEase(_swapMoveType));
+		}
+	}
+
+	private void ImageFadeEffect(int number)
+	{
+		if (_curSelectButtonNumber == number)
+			return;
+
+		if (_mySequence != null && _mySequence.IsPlaying())
+		{
+			_mySequence.onComplete?.Invoke();
+			_mySequence.Kill();
+		}
+
+		if (_curSelectButtonNumber < number)
+		{
+			_curSelectButtonNumber = number;
+
+			_mySequence = DOTween.Sequence()
+			.SetAutoKill(false)
+			.OnStart(() =>
+			{
+				_curvedUIData.NewImage_1.sprite = _buttonRightSetting[number].TargetImage_1;
+				_curvedUIData.NewImage_1.gameObject.transform.localPosition = _curvedUIData.NewImageWaitDownPos1.localPosition;
+				_curvedUIData.NewImage_2.sprite = _buttonRightSetting[number].TargetImage_2;
+				_curvedUIData.NewImage_2.gameObject.transform.localPosition = _curvedUIData.NewImageWaitDownPos2.localPosition;
+			})
+			.Append(_curvedUIData.NewImage_1.transform.DOLocalMove(_curvedUIData.CurImagePos1.localPosition, _swapSpeed).SetEase(_swapMoveType))
+			.OnComplete(() =>
+			{
+				_curvedUIData.CurImage_1.sprite = _buttonRightSetting[number].TargetImage_1;
+				_curvedUIData.NewImage_1.gameObject.transform.localPosition = _curvedUIData.NewImageWaitDownPos1.localPosition;
+				_curvedUIData.CurImage_1.gameObject.transform.localPosition = _curvedUIData.CurImagePos1.localPosition;
+				_curvedUIData.CurImage_2.sprite = _buttonRightSetting[number].TargetImage_2;
+				_curvedUIData.NewImage_2.gameObject.transform.localPosition = _curvedUIData.NewImageWaitDownPos2.localPosition;
+				_curvedUIData.CurImage_2.gameObject.transform.localPosition = _curvedUIData.CurImagePos2.localPosition;
+			})
+			.Join(_curvedUIData.CurImage_1.transform.DOLocalMove(_curvedUIData.NewImageWaitUpPos1.localPosition, _swapSpeed).SetEase(_swapMoveType));
 		}
 		else
 		{
@@ -192,11 +327,13 @@ public class CurvedUIEditor : MonoBehaviour
 			{
 				_curvedUIData.CurImage_1.sprite = _buttonRightSetting[number].TargetImage_1;
 				_curvedUIData.NewImage_1.gameObject.transform.localPosition = _curvedUIData.NewImageWaitUpPos1.localPosition;
-			});
+				_curvedUIData.CurImage_1.gameObject.transform.localPosition = _curvedUIData.CurImagePos1.localPosition;
+			})
+			.Join(_curvedUIData.CurImage_1.transform.DOLocalMove(_curvedUIData.NewImageWaitDownPos1.localPosition, _swapSpeed).SetEase(_swapMoveType));
 		}
 	}
 
-	private void ImageScrollViewEffect(int number)
+	private void ImageTwoImageAwayEffect(int number)
 	{
 		if (_curSelectButtonNumber == number)
 			return;

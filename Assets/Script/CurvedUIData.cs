@@ -35,9 +35,4 @@ public class CurvedUIData : MonoBehaviour
 	{
 		CanvasRectTrans = GetComponentInChildren<Canvas>().GetComponent<RectTransform>();
 	}
-
-	public void Clickddd()
-	{
-		Debug.Log("Umin On");
-	}
 }
